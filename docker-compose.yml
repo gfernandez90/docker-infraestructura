@@ -1,0 +1,37 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: infraestructura_app
+    restart: always
+    command: php -S 0.0.0.0:80 -t /var/www/html/public
+    ports:
+      - "62080:80"
+    volumes:
+      - ./src:/var/www/html
+    environment:
+      - DB_HOST=db
+      - DB_NAME=infraestructura_db
+      - DB_USER=infra_user
+      - DB_PASSWORD=infra_password
+      - CAS_HOSTNAME=guri.ceip.edu.uy
+      - CAS_PORT=443
+      - CAS_URI=/cas
+
+  db:
+    image: postgres:17-alpine
+    container_name: infraestructura_db
+    restart: always
+    environment:
+      POSTGRES_DB: infraestructura_db
+      POSTGRES_USER: infra_user
+      POSTGRES_PASSWORD: infra_password
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "62432:5432"
+
+volumes:
+  pgdata:

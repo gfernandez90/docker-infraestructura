@@ -1,0 +1,37 @@
+# Logs
+*.log
+
+# Runtime
+tmp/
+cache/
+
+# Docker
+**/.env
+.env
+
+# Base de datos
+*.db
+*.sqlite
+*.sqlite3
+
+# IDE
+.vscode/
+.idea/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+
+# Node
+node_modules/
+
+# Docker volumes
+volumes/
+
+# Certificados
+*.pem
+*.key
+*.crt

@@ -1,0 +1,14 @@
+{
+    "name": "dgeip/infraestructura",
+    "description": "Sistema de Gestión de Infraestructura - DGEIP",
+    "type": "project",
+    "require": {
+        "php": ">=8.3",
+        "jasig/phpcas": "^1.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}
