@@ -17,17 +17,20 @@
         <a href="/index.php?page=gestion_inbox" class="flex items-center gap-3 px-4 py-3 rounded-lg text-emerald-400 hover:bg-slate-800 hover:text-emerald-300 transition">
             📥 <span>Mesa de Entrada</span>
         </a>
-	<a href="/index.php?page=ver_incidente" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sky-400 hover:bg-slate-800 hover:text-sky-300 transition">
+    	<a href="/index.php?page=ver_incidente" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sky-400 hover:bg-slate-800 hover:text-sky-300 transition">
             🔍 <span>Leer Incidente</span>
         </a>
-	<a href="/index.php?page=crear_incidente" class="flex items-center gap-3 px-4 py-3 rounded-lg text-amber-400 hover:bg-slate-800 hover:text-amber-300 transition">
+        <a href="/index.php?page=ver_proyecto" class="flex items-center gap-3 px-4 py-3 rounded-lg text-purple-400 hover:bg-slate-800 hover:text-purple-300 transition">
+            📂 <span>Ver Proyecto</span>
+        </a>
+    	<a href="/index.php?page=crear_incidente" class="flex items-center gap-3 px-4 py-3 rounded-lg text-amber-400 hover:bg-slate-800 hover:text-amber-300 transition">
     	    ⚡ <span>Crear Incidente</span>
-	</a>
-	<a href="/index.php?page=crear_proyecto" class="flex items-center gap-3 px-4 py-3 rounded-lg text-indigo-400 hover:bg-slate-800 hover:text-indigo-300 transition">
+    	</a>
+    	<a href="/index.php?page=crear_proyecto" class="flex items-center gap-3 px-4 py-3 rounded-lg text-indigo-400 hover:bg-slate-800 hover:text-indigo-300 transition">
     	    ➕ <span>Crear Proyecto</span>
-	</a>
+    	</a>
 
-        <!-- Sección Sincronizador -->
+    <!-- Sección Sincronizador -->
         <div class="pt-4 pb-1 text-xs font-semibold text-slate-500 uppercase tracking-wider px-4">
             Sincronizador
         </div>
