@@ -62,7 +62,7 @@ Copia o configura las credenciales de conexión en tu archivo de configuración 
 
 ```php
 // Ejemplo de configuración de API Redmine
-define('REDMINE_URL', '[https://sita.anep.edu.uy](https://sita.anep.edu.uy)');
+define('REDMINE_URL', 'url)');
 define('REDMINE_API_KEY', 'TU_API_KEY_AQUI');
 
 // Ejemplo de configuración PostgreSQL
