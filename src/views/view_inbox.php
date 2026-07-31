@@ -1,66 +1,4 @@
-<?php
-// views/gestion_inbox.php
-require_once __DIR__ . '/../config/db.php';
-
-$tab = $_GET['tab'] ?? 'todas';
-$mostrarCerrados = isset($_GET['cerrados']) && $_GET['cerrados'] === '1';
-
-// Condición SQL PostgreSQL compatible con booleans
-$condicionEstado = $mostrarCerrados 
-    ? "AND e.is_closed IS TRUE" 
-    : "AND (e.is_closed IS NOT TRUE)";
-
-// 1. Consulta SQL principal (Casteamos e.is_closed::int para evitar mismatch en COALESCE)
-$sql = "
-    SELECT 
-        t.id,
-        t.proyecto_id,
-        t.tracker_nombre,
-        t.estado_id,
-        COALESCE(e.nombre, 'Sin Estado') as estado_nombre,
-        COALESCE(e.is_closed::int, 0) as is_closed,
-        t.prioridad_id,
-        t.asunto,
-        t.descripcion,
-        t.autor_id,
-        t.asignado_a_id,
-        t.porcentaje_done,
-        t.created_on,
-        t.updated_on,
-        t.parent_id,
-        t.categoria
-    FROM redmine_tareas t
-    LEFT JOIN redmine_estados e ON t.estado_id = e.id
-    WHERE 1=1 {$condicionEstado}
-";
-
-if ($tab === 'sin_categoria') {
-    $sql .= " AND (t.categoria IS NULL OR t.categoria = '')";
-} elseif ($tab === 'operativa') {
-    $sql .= " AND (t.categoria IS NULL OR (LOWER(t.categoria) != 'proyecto' AND t.categoria != '108'))";
-} elseif ($tab === 'proyectos') {
-    $sql .= " AND (LOWER(t.categoria) = 'proyecto' OR t.categoria = '108')";
-}
-
-$sql .= " ORDER BY t.id DESC";
-
-$stmt = $pdo->prepare($sql);
-$stmt->execute();
-$tickets = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// 2. Conteo de badges
-$sqlCounts = "
-    SELECT 
-        COUNT(CASE WHEN t.categoria IS NULL OR t.categoria = '' THEN 1 END) as sin_cat,
-        COUNT(CASE WHEN t.categoria IS NULL OR (LOWER(t.categoria) != 'proyecto' AND t.categoria != '108') THEN 1 END) as operativas,
-        COUNT(CASE WHEN LOWER(t.categoria) = 'proyecto' OR t.categoria = '108' THEN 1 END) as proyectos,
-        COUNT(*) as total
-    FROM redmine_tareas t
-    LEFT JOIN redmine_estados e ON t.estado_id = e.id
-    WHERE 1=1 {$condicionEstado}
-";
-$counts = $pdo->query($sqlCounts)->fetch(PDO::FETCH_ASSOC);
-?>
+<!-- src/views/view_inbox.php -->
 <div class="w-full">
     <!-- Tarjeta Contenedora Única (Modal Completo) -->
     <div class="bg-slate-900 rounded-2xl shadow-2xl border border-slate-800 overflow-hidden w-full">
@@ -75,11 +13,11 @@ $counts = $pdo->query($sqlCounts)->fetch(PDO::FETCH_ASSOC);
             </div>
             <div class="flex items-center gap-3">
                 <?php if ($mostrarCerrados): ?>
-                    <a href="/index.php?page=gestion_inbox&tab=<?= urlencode($tab) ?>" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-lg transition border border-slate-700">
+                    <a href="/index.php?page=inbox&tab=<?= urlencode($tab) ?>" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-lg transition border border-slate-700">
                         Ver Activos
                     </a>
                 <?php else: ?>
-                    <a href="/index.php?page=gestion_inbox&tab=<?= urlencode($tab) ?>&cerrados=1" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium rounded-lg transition border border-slate-700">
+                    <a href="/index.php?page=inbox&tab=<?= urlencode($tab) ?>&cerrados=1" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium rounded-lg transition border border-slate-700">
                         Ver Finalizados / Cerrados
                     </a>
                 <?php endif; ?>
@@ -94,19 +32,19 @@ $counts = $pdo->query($sqlCounts)->fetch(PDO::FETCH_ASSOC);
         <div class="px-6 bg-slate-950/60 border-b border-slate-800 flex gap-2 pt-2">
             <?php $cerradosParam = $mostrarCerrados ? '&cerrados=1' : ''; ?>
             
-            <a href="/index.php?page=gestion_inbox&tab=todas<?= $cerradosParam ?>" 
+            <a href="/index.php?page=inbox&tab=todas<?= $cerradosParam ?>" 
                class="px-4 py-3 border-b-2 font-medium text-sm transition flex items-center gap-2 <?= $tab === 'todas' ? 'border-emerald-500 text-emerald-400 font-semibold' : 'border-transparent text-slate-400 hover:text-slate-200' ?>">
                 📥 Todas <span class="px-2 py-0.5 rounded-full text-xs bg-slate-800 text-slate-300 border border-slate-700"><?= $counts['total'] ?? 0 ?></span>
             </a>
-            <a href="/index.php?page=gestion_inbox&tab=sin_categoria<?= $cerradosParam ?>" 
+            <a href="/index.php?page=inbox&tab=sin_categoria<?= $cerradosParam ?>" 
                class="px-4 py-3 border-b-2 font-medium text-sm transition flex items-center gap-2 <?= $tab === 'sin_categoria' ? 'border-amber-500 text-amber-400 font-semibold' : 'border-transparent text-slate-400 hover:text-slate-200' ?>">
                 ⚠️ Sin Categoría <span class="px-2 py-0.5 rounded-full text-xs bg-amber-950/60 text-amber-300 border border-amber-800/50"><?= $counts['sin_cat'] ?? 0 ?></span>
             </a>
-            <a href="/index.php?page=gestion_inbox&tab=operativa<?= $cerradosParam ?>" 
+            <a href="/index.php?page=inbox&tab=operativa<?= $cerradosParam ?>" 
                class="px-4 py-3 border-b-2 font-medium text-sm transition flex items-center gap-2 <?= $tab === 'operativa' ? 'border-sky-500 text-sky-400 font-semibold' : 'border-transparent text-slate-400 hover:text-slate-200' ?>">
                 🔧 Operativas <span class="px-2 py-0.5 rounded-full text-xs bg-sky-950/60 text-sky-300 border border-sky-800/50"><?= $counts['operativas'] ?? 0 ?></span>
             </a>
-            <a href="/index.php?page=gestion_inbox&tab=proyectos<?= $cerradosParam ?>" 
+            <a href="/index.php?page=inbox&tab=proyectos<?= $cerradosParam ?>" 
                class="px-4 py-3 border-b-2 font-medium text-sm transition flex items-center gap-2 <?= $tab === 'proyectos' ? 'border-purple-500 text-purple-400 font-semibold' : 'border-transparent text-slate-400 hover:text-slate-200' ?>">
                 📂 Proyectos <span class="px-2 py-0.5 rounded-full text-xs bg-purple-950/60 text-purple-300 border border-purple-800/50"><?= $counts['proyectos'] ?? 0 ?></span>
             </a>

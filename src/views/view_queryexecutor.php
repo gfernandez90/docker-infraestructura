@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty(trim($sql_query))) {
             <span class="text-xs text-slate-400 bg-slate-900/60 px-2.5 py-1 rounded-full border border-slate-700">Consola de Administración</span>
         </div>
 
-        <form method="POST" action="/index.php?page=query_executor" class="p-5 space-y-4">
+        <form method="POST" action="/index.php?page=view_queryexecutor" class="p-5 space-y-4">
             <div>
                 <label for="sql_query" class="block text-sm font-medium text-slate-300 mb-2">
                     Sentencia SQL a ejecutar:

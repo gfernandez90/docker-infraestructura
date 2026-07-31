@@ -147,4 +147,28 @@ public function getRequest(string $endpoint): array
 
         return json_decode($response, true) ?? [];
     }
+    public function updateIssue($issueId, $data) {
+        $url = rtrim($this->apiUrl, '/') . '/issues/' . $issueId . '.json';
+        
+        // Redmine espera que el JSON tenga la raíz "issue"
+        $payload = json_encode(['issue' => $data]);
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        
+        // Cabeceras obligatorias para la API de Redmine
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json',
+            'X-Redmine-API-Key: ' . $this->apiKey
+        ]);
+
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        // Retorna true si el código HTTP es 200 (OK) o 204 (No Content)
+        return ($httpCode === 200 || $httpCode === 204);
+    }
 }
