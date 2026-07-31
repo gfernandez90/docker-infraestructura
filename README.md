@@ -39,7 +39,34 @@ docker-infraestructura/
 * [Docker](https://docs.docker.com/get-docker/)
 * [Docker Compose](https://docs.docker.com/compose/install/)
 
+<<<<<<< HEAD
 ## ⚙️ Instalación y Despliegue
+=======
+### 1. Requisitos Previos
+
+* [Docker](https://www.docker.com/) y [Docker Compose](https://docs.docker.com/compose/) instalados.
+* Acceso de red y Token API válido a la instancia de **Redmine SITA**.
+* Instancia/Contenedor de **PostgreSQL** con la estructura de tablas (`redmine_tareas`, etc.).
+
+### 2. Configuración de Variables de Entorno
+
+Copia o configura las credenciales de conexión en tu archivo de configuración o entorno (`src/config/database.php` / `RedmineService.php`):
+
+```php
+// Ejemplo de configuración de API Redmine
+define('REDMINE_URL', 'url)');
+define('REDMINE_API_KEY', 'TU_API_KEY_AQUI');
+
+// Ejemplo de configuración PostgreSQL
+define('DB_HOST', 'postgres'); // o IP correspondiente
+define('DB_NAME', 'tu_base_datos');
+define('DB_USER', 'tu_usuario');
+define('DB_PASS', 'tu_password');
+
+```
+
+### 3. Levantar el Contenedor
+>>>>>>> 4819e14772d4ed7cd1dfc6543a521b77b7c1c667
 
 1. **Clonar el repositorio:**
 ```bash
