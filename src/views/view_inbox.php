@@ -32,21 +32,21 @@
         <div class="px-6 bg-slate-950/60 border-b border-slate-800 flex gap-2 pt-2">
             <?php $cerradosParam = $mostrarCerrados ? '&cerrados=1' : ''; ?>
             
-            <a href="/index.php?page=inbox&tab=todas<?= $cerradosParam ?>" 
-               class="px-4 py-3 border-b-2 font-medium text-sm transition flex items-center gap-2 <?= $tab === 'todas' ? 'border-emerald-500 text-emerald-400 font-semibold' : 'border-transparent text-slate-400 hover:text-slate-200' ?>">
-                📥 Todas <span class="px-2 py-0.5 rounded-full text-xs bg-slate-800 text-slate-300 border border-slate-700"><?= $counts['total'] ?? 0 ?></span>
+            <a href="/index.php?page=inbox&tab=operativa<?= $cerradosParam ?>" 
+               class="px-4 py-3 border-b-2 font-medium text-sm transition flex items-center gap-2 <?= $tab === 'operativa' ? 'border-sky-500 text-sky-400 font-semibold' : 'border-transparent text-slate-400 hover:text-slate-200' ?>">
+                🔧 Operativas <span class="px-2 py-0.5 rounded-full text-xs bg-sky-950/60 text-sky-300 border border-sky-800/50"><?= $counts['operativas'] ?? 0 ?></span>
             </a>
             <a href="/index.php?page=inbox&tab=sin_categoria<?= $cerradosParam ?>" 
                class="px-4 py-3 border-b-2 font-medium text-sm transition flex items-center gap-2 <?= $tab === 'sin_categoria' ? 'border-amber-500 text-amber-400 font-semibold' : 'border-transparent text-slate-400 hover:text-slate-200' ?>">
                 ⚠️ Sin Categoría <span class="px-2 py-0.5 rounded-full text-xs bg-amber-950/60 text-amber-300 border border-amber-800/50"><?= $counts['sin_cat'] ?? 0 ?></span>
             </a>
-            <a href="/index.php?page=inbox&tab=operativa<?= $cerradosParam ?>" 
-               class="px-4 py-3 border-b-2 font-medium text-sm transition flex items-center gap-2 <?= $tab === 'operativa' ? 'border-sky-500 text-sky-400 font-semibold' : 'border-transparent text-slate-400 hover:text-slate-200' ?>">
-                🔧 Operativas <span class="px-2 py-0.5 rounded-full text-xs bg-sky-950/60 text-sky-300 border border-sky-800/50"><?= $counts['operativas'] ?? 0 ?></span>
-            </a>
             <a href="/index.php?page=inbox&tab=proyectos<?= $cerradosParam ?>" 
                class="px-4 py-3 border-b-2 font-medium text-sm transition flex items-center gap-2 <?= $tab === 'proyectos' ? 'border-purple-500 text-purple-400 font-semibold' : 'border-transparent text-slate-400 hover:text-slate-200' ?>">
                 📂 Proyectos <span class="px-2 py-0.5 rounded-full text-xs bg-purple-950/60 text-purple-300 border border-purple-800/50"><?= $counts['proyectos'] ?? 0 ?></span>
+            </a>
+            <a href="/index.php?page=inbox&tab=todas<?= $cerradosParam ?>" 
+               class="px-4 py-3 border-b-2 font-medium text-sm transition flex items-center gap-2 <?= $tab === 'todas' ? 'border-emerald-500 text-emerald-400 font-semibold' : 'border-transparent text-slate-400 hover:text-slate-200' ?>">
+                📥 Todas <span class="px-2 py-0.5 rounded-full text-xs bg-slate-800 text-slate-300 border border-slate-700"><?= $counts['total'] ?? 0 ?></span>
             </a>
         </div>
 

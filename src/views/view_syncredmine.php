@@ -6,10 +6,14 @@ $mensaje = null;
 $error = null;
 $detallesSync = [];
 
+
 $proyectosObjetivo = [
-    'redes-draft',
-    'subidas-a-produccion'
+    'incidentes-diarios',
+    'proyectos-infraestructura'
 ];
+
+
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ejecutar_sync'])) {
     try {
@@ -231,7 +235,7 @@ $cantSeguidores = $pdo->query("SELECT COUNT(*) FROM redmine_tarea_seguidores")->
             </div>
 
             <!-- Botón de Ejecución -->
-            <form method="POST" action="/index.php?page=sync_redmine" class="pt-2">
+            <form method="POST" action="/index.php?page=view_syncredmine" class="pt-2">
                 <input type="hidden" name="ejecutar_sync" value="1">
                 <button type="submit"
                         onclick="return confirm('⚠️ Esto vaciará las tablas de Redmine en PostgreSQL y las volverá a cargar completamente. ¿Deseas continuar?');"

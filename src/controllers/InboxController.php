@@ -4,7 +4,7 @@
 require_once __DIR__ . '/../models/TareaModel.php';
 
 // 1. Recoger variables de la URL (GET)
-$tab = $_GET['tab'] ?? 'todas';
+$tab = $_GET['tab'] ?? 'operativa';
 $mostrarCerrados = isset($_GET['cerrados']) && $_GET['cerrados'] === '1';
 
 // 2. Instanciar el modelo usando la conexión $pdo (que ya viene de index.php)

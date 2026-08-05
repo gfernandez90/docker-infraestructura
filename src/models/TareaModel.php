@@ -33,6 +33,25 @@ class TareaModel {
         } elseif ($tab === 'proyectos') {
             $sql .= " AND (LOWER(t.categoria) = 'proyecto' OR t.categoria = '108')";
         }
+        /*
+        Operativa REAL:
+         AND (t.categoria IS NULL OR (LOWER(t.categoria) != 'proyecto' AND t.categoria != '108'))
+AND (LOWER(e.nombre) != 'resuelto') 
+AND (LOWER(e.nombre) != 'rechazada') 
+AND (LOWER(e.nombre) != 'pronto para testing') 
+AND (LOWER(e.nombre) != 'resuelto en desarrollo') 
+AND (LOWER(e.nombre) != 'validado')
+
+Para el inbox seria
+Operativa 
+Finalizada (Resuelto / Rechazada)
+Proyectos
+Todas
+
+
+Cambiar en la logica -> NO CARGAR EN OPERATIVA TAREAS QUE PERTENEZCAN AL PROYECTO PROYECTOS INFRA
+
+        */
 
         $sql .= " ORDER BY t.id DESC";
 
