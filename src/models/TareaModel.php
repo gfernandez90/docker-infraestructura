@@ -9,10 +9,20 @@ class TareaModel {
     }
 
     public function getTickets(string $tab, bool $mostrarCerrados): array {
-        $condicionEstado = $mostrarCerrados 
-            ? "AND e.is_closed IS TRUE" 
-            : "AND (e.is_closed IS NOT TRUE)";
+        // 1. Filtro Global por Proyecto
+        // ATENCIÓN: Si tu campo t.proyecto_id es numérico, cambiá 'incidentes-diarios' por su ID correspondiente (ej: 5).
+        $proyectoCondition = "AND t.proyecto_id = '88'";
 
+        // 2. Filtro de Estados (Activos vs Finalizados/Cerrados)
+        if ($mostrarCerrados) {
+            // Trae los tickets cerrados nativamente OR los que cayeron en estados de finalización
+            $condicionEstado = "AND (e.is_closed IS TRUE OR LOWER(e.nombre) IN ('resuelto', 'rechazada', 'rechadaza', 'validado', 'cerrado', 'resuelto en desarrollo'))";
+        } else {
+            // Trae los tickets abiertos y excluye explícitamente los estados que indicaste
+            $condicionEstado = "AND e.is_closed IS NOT TRUE AND LOWER(e.nombre) NOT IN ('resuelto', 'rechazada', 'rechadaza', 'validado', 'cerrado', 'resuelto en desarrollo')";
+        }
+
+        // 3. Consulta Base
         $sql = "
             SELECT 
                 t.id, t.proyecto_id, t.tracker_nombre, t.estado_id,
@@ -23,35 +33,22 @@ class TareaModel {
                 t.updated_on, t.parent_id, t.categoria
             FROM redmine_tareas t
             LEFT JOIN redmine_estados e ON t.estado_id = e.id
-            WHERE 1=1 {$condicionEstado}
+            WHERE 1=1 
+            {$proyectoCondition} 
+            {$condicionEstado}
         ";
 
+        // 4. Filtros de Pestañas
         if ($tab === 'sin_categoria') {
+            // Sin categoría asignada
             $sql .= " AND (t.categoria IS NULL OR t.categoria = '')";
         } elseif ($tab === 'operativa') {
-            $sql .= " AND (t.categoria IS NULL OR (LOWER(t.categoria) != 'proyecto' AND t.categoria != '108'))";
+            // Tienen categoría asignada Y NO son proyectos
+            $sql .= " AND (t.categoria IS NOT NULL AND t.categoria != '') AND (LOWER(t.categoria) != 'proyecto' AND t.categoria != '108')";
         } elseif ($tab === 'proyectos') {
+            // Son de categoría proyecto
             $sql .= " AND (LOWER(t.categoria) = 'proyecto' OR t.categoria = '108')";
         }
-        /*
-        Operativa REAL:
-         AND (t.categoria IS NULL OR (LOWER(t.categoria) != 'proyecto' AND t.categoria != '108'))
-AND (LOWER(e.nombre) != 'resuelto') 
-AND (LOWER(e.nombre) != 'rechazada') 
-AND (LOWER(e.nombre) != 'pronto para testing') 
-AND (LOWER(e.nombre) != 'resuelto en desarrollo') 
-AND (LOWER(e.nombre) != 'validado')
-
-Para el inbox seria
-Operativa 
-Finalizada (Resuelto / Rechazada)
-Proyectos
-Todas
-
-
-Cambiar en la logica -> NO CARGAR EN OPERATIVA TAREAS QUE PERTENEZCAN AL PROYECTO PROYECTOS INFRA
-
-        */
 
         $sql .= " ORDER BY t.id DESC";
 
@@ -61,19 +58,27 @@ Cambiar en la logica -> NO CARGAR EN OPERATIVA TAREAS QUE PERTENEZCAN AL PROYECT
     }
 
     public function getCounts(bool $mostrarCerrados): array {
-        $condicionEstado = $mostrarCerrados 
-            ? "AND e.is_closed IS TRUE" 
-            : "AND (e.is_closed IS NOT TRUE)";
+        // Replicamos las mismas condiciones globales y de estado para que los contadores coincidan
+        $proyectoCondition = "AND t.proyecto_id = '88'";
+        
+        if ($mostrarCerrados) {
+            $condicionEstado = "AND (e.is_closed IS TRUE OR LOWER(e.nombre) IN ('resuelto', 'rechazada', 'rechadaza', 'validado', 'cerrado', 'resuelto en desarrollo'))";
+        } else {
+            $condicionEstado = "AND e.is_closed IS NOT TRUE AND LOWER(e.nombre) NOT IN ('resuelto', 'rechazada', 'rechadaza', 'validado', 'cerrado', 'resuelto en desarrollo')";
+        }
 
+        // Contamos aplicando la lógica de cada pestaña directamente en el SELECT
         $sqlCounts = "
             SELECT 
-                COUNT(CASE WHEN t.categoria IS NULL OR t.categoria = '' THEN 1 END) as sin_cat,
-                COUNT(CASE WHEN t.categoria IS NULL OR (LOWER(t.categoria) != 'proyecto' AND t.categoria != '108') THEN 1 END) as operativas,
+                COUNT(CASE WHEN (t.categoria IS NULL OR t.categoria = '') THEN 1 END) as sin_cat,
+                COUNT(CASE WHEN (t.categoria IS NOT NULL AND t.categoria != '') AND (LOWER(t.categoria) != 'proyecto' AND t.categoria != '108') THEN 1 END) as operativas,
                 COUNT(CASE WHEN LOWER(t.categoria) = 'proyecto' OR t.categoria = '108' THEN 1 END) as proyectos,
                 COUNT(*) as total
             FROM redmine_tareas t
             LEFT JOIN redmine_estados e ON t.estado_id = e.id
-            WHERE 1=1 {$condicionEstado}
+            WHERE 1=1 
+            {$proyectoCondition} 
+            {$condicionEstado}
         ";
         
         return $this->db->query($sqlCounts)->fetch(PDO::FETCH_ASSOC);
