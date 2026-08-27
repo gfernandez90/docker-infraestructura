@@ -10,27 +10,38 @@
             🛠️ <span>Configuraciones</span>
         </a>
 
-	<!-- Sección Gestión Redmine -->
+        <!-- NUEVA SECCIÓN: Sistemas y Respaldos -->
+        <div class="pt-4 pb-1 text-xs font-semibold text-slate-500 uppercase tracking-wider px-4">
+            Sistemas e Infra
+        </div>
+        <a href="/index.php?page=sistemas" class="flex items-center gap-3 px-4 py-3 rounded-lg text-teal-400 hover:bg-slate-800 hover:text-teal-300 transition">
+            🖥️ <span>Listado de Sistemas</span>
+        </a>
+        <a href="/index.php?page=crear_sistema" class="flex items-center gap-3 px-4 py-3 rounded-lg text-green-400 hover:bg-slate-800 hover:text-green-300 transition">
+            ➕ <span>Nuevo Sistema</span>
+        </a>
+
+        <!-- Sección Gestión Redmine -->
         <div class="pt-4 pb-1 text-xs font-semibold text-slate-500 uppercase tracking-wider px-4">
             Gestión Redmine
         </div>
         <a href="/index.php?page=inbox" class="flex items-center gap-3 px-4 py-3 rounded-lg text-emerald-400 hover:bg-slate-800 hover:text-emerald-300 transition">
             📥 <span>Mesa de Entrada</span>
         </a>
-    	<a href="/index.php?page=view_ver_incidente" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sky-400 hover:bg-slate-800 hover:text-sky-300 transition">
+        <a href="/index.php?page=view_ver_incidente" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sky-400 hover:bg-slate-800 hover:text-sky-300 transition">
             🔍 <span>Leer Incidente</span>
         </a>
         <a href="/index.php?page=view_ver_proyecto" class="flex items-center gap-3 px-4 py-3 rounded-lg text-purple-400 hover:bg-slate-800 hover:text-purple-300 transition">
             📂 <span>Ver Proyecto</span>
         </a>
-    	<a href="/index.php?page=view_crear_incidente" class="flex items-center gap-3 px-4 py-3 rounded-lg text-amber-400 hover:bg-slate-800 hover:text-amber-300 transition">
-    	    ⚡ <span>Crear Incidente</span>
-    	</a>
-    	<a href="/index.php?page=view_crear_proyecto" class="flex items-center gap-3 px-4 py-3 rounded-lg text-indigo-400 hover:bg-slate-800 hover:text-indigo-300 transition">
-    	    ➕ <span>Crear Proyecto</span>
-    	</a>
+        <a href="/index.php?page=view_crear_incidente" class="flex items-center gap-3 px-4 py-3 rounded-lg text-amber-400 hover:bg-slate-800 hover:text-amber-300 transition">
+            ⚡ <span>Crear Incidente</span>
+        </a>
+        <a href="/index.php?page=view_crear_proyecto" class="flex items-center gap-3 px-4 py-3 rounded-lg text-indigo-400 hover:bg-slate-800 hover:text-indigo-300 transition">
+            ➕ <span>Crear Proyecto</span>
+        </a>
 
-    <!-- Sección Sincronizador -->
+        <!-- Sección Sincronizador -->
         <div class="pt-4 pb-1 text-xs font-semibold text-slate-500 uppercase tracking-wider px-4">
             Sincronizador
         </div>

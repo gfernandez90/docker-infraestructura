@@ -12,6 +12,22 @@ require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../helpers/debug.php'; // Tu nuevo helper de debug
 
 $page = $_GET['page'] ?? 'dashboard';
+// --- INTERCEPTAR ACCIONES POST ANTES DEL HTML ---
+// Si la acción es guardar o actualizar, cargamos el controlador y detenemos la ejecución (exit)
+// para que la redirección por header() funcione sin imprimir HTML.
+if ($page === 'guardar_sistema') {
+    require_once __DIR__ . '/../controllers/guardar_sistema.php';
+    exit; 
+}
+if ($page === 'actualizar_sistema') {
+    require_once __DIR__ . '/../controllers/actualizar_sistema.php';
+    exit;
+}
+if ($page === 'eliminar_sistema') { // <-- NUEVO BLOQUE
+    require_once __DIR__ . '/../controllers/eliminar_sistema.php';
+    exit;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
