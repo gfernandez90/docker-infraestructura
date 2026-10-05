@@ -158,7 +158,6 @@ Este proyecto no especifica una licencia. Por defecto, el código fuente está p
 
 *   **Repositorio:** [docker-infraestructura](https://github.com/gfernandez90/docker-infraestructura)
 *   **Autor:** [gfernandez90](https://github.com/gfernandez90)
-*   **Redmine (API):** [sita.anep.edu.uy](https://sita.anep.edu.uy/)
 
 ---
 
