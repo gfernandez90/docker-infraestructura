@@ -27,6 +27,24 @@ if ($page === 'eliminar_sistema') { // <-- NUEVO BLOQUE
     require_once __DIR__ . '/../controllers/eliminar_sistema.php';
     exit;
 }
+if ($page === 'guardar_sistema') {
+    require_once __DIR__ . '/../controllers/guardar_sistema.php';
+    exit; 
+}
+if ($page === 'actualizar_sistema') {
+    require_once __DIR__ . '/../controllers/actualizar_sistema.php';
+    exit;
+}
+if ($page === 'eliminar_sistema') { 
+    require_once __DIR__ . '/../controllers/eliminar_sistema.php';
+    exit;
+}
+
+// ---> AÑADIR ESTE BLOQUE NUEVO <---
+if ($page === 'guardar_agente') { 
+    require_once __DIR__ . '/../controllers/guardar_agente.php';
+    exit;
+}
 
 ?>
 <!DOCTYPE html>

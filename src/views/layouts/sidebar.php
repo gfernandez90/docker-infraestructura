@@ -20,6 +20,12 @@
         <a href="/index.php?page=crear_sistema" class="flex items-center gap-3 px-4 py-3 rounded-lg text-green-400 hover:bg-slate-800 hover:text-green-300 transition">
             ➕ <span>Nuevo Sistema</span>
         </a>
+        <a href="/index.php?page=mapa_integraciones" class="flex items-center gap-3 px-4 py-3 rounded-lg text-fuchsia-400 hover:bg-slate-800 hover:text-fuchsia-300 transition">
+            🕸️ <span>Mapa de Integraciones</span>
+        </a>
+        <a href="/index.php?page=agentes" class="flex items-center gap-3 px-4 py-3 rounded-lg text-fuchsia-400 hover:bg-slate-800 hover:text-fuchsia-300 transition">
+            👥 <span>Personal</span>
+        </a>
 
         <!-- Sección Gestión Redmine -->
         <div class="pt-4 pb-1 text-xs font-semibold text-slate-500 uppercase tracking-wider px-4">
@@ -39,6 +45,14 @@
         </a>
         <a href="/index.php?page=view_crear_proyecto" class="flex items-center gap-3 px-4 py-3 rounded-lg text-indigo-400 hover:bg-slate-800 hover:text-indigo-300 transition">
             ➕ <span>Crear Proyecto</span>
+        </a>
+
+        <!-- Sección Gestión Respaldos -->
+        <div class="pt-4 pb-1 text-xs font-semibold text-slate-500 uppercase tracking-wider px-4">
+            Gestión Respaldos
+        </div>
+        <a href="/index.php?page=view_inventario_respaldos" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sky-400 hover:bg-slate-800 hover:text-sky-300 transition">
+            🔍 <span>Inventario</span>
         </a>
 
         <!-- Sección Sincronizador -->
